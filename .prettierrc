@@ -7,6 +7,6 @@
   "semi": true,
   "bracketSpacing": true,
   "endOfLine": "lf",
-  "jsxSingleQuote": false,
+  "jsxSingleQuote": true,
   "bracketSameLine": false
 }
