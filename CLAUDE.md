@@ -10,7 +10,8 @@ just-one-day/
 │   ├── src/
 │   │   ├── _app.tsx               # 앱 루트 컴포넌트
 │   │   ├── pages/
-│   │   │   ├── index.tsx          # 메인 페이지
+│   │   │   ├── index.tsx          # 로그인 페이지 (엔트리)
+│   │   │   ├── main.tsx           # 메인 페이지 (로그인 후)
 │   │   │   ├── _404.tsx           # 404 페이지
 │   │   │   └── about.tsx          # About 페이지
 │   │   ├── styles/
@@ -26,8 +27,13 @@ just-one-day/
 │   ├── tsconfig.json              # TypeScript 설정
 │   ├── eslint.config.mjs          # ESLint 설정
 │   └── package.json               # name: "frontend"
-├── backend/                       # 백엔드 (준비 중)
-│   └── package.json               # name: "just-one-day-backend"
+├── backend/                       # Express.js 백엔드
+│   ├── src/
+│   │   ├── index.ts              # Express 서버 엔트리포인트 (포트 3000)
+│   │   └── routes/
+│   │       └── auth.ts           # 토스 로그인/로그아웃/리프레시 라우트
+│   ├── package.json               # name: "just-one-day-backend"
+│   └── tsconfig.json              # TypeScript 설정
 ├── package.json                   # 루트 - workspaces 설정
 ├── .yarnrc.yml                    # Yarn 설정
 ├── .gitignore
@@ -49,7 +55,26 @@ cd frontend && yarn build        # 빌드
 cd frontend && yarn test         # 테스트
 cd frontend && yarn typecheck    # 타입 체크
 cd frontend && yarn lint         # 린트
+
+# backend
+cd backend && yarn dev           # 개발 서버 실행 (포트 3000)
+cd backend && yarn build         # 빌드
 ```
+
+## 토스 앱인토스 API
+
+- 토스 API Base URL: `https://apps-in-toss-api.toss.im`
+- 참고 문서:
+  - 로그인 API: https://developers-apps-in-toss.toss.im/login/develop.html
+  - 연동 프로세스 (mTLS): https://developers-apps-in-toss.toss.im/development/integration-process.html
+- **mTLS 인증서 필수**: 토스 API 호출 시 클라이언트 인증서(cert.pem) + 키(key.pem)를 사용한 mTLS 통신 필요
+  - 인증서는 앱인토스 콘솔에서 발급 (유효기간 390일)
+  - 인증서 파일: `first_public.crt`, `first_private.key` → `backend/certs/`에 배치
+  - 환경변수 `TOSS_CERT_PATH`, `TOSS_KEY_PATH`로 경로 설정 (`backend/.env` 사용)
+- 엔드포인트:
+  - `POST /auth/login` — authorizationCode로 토큰 발급 + 사용자 정보 조회
+  - `POST /auth/refresh` — refreshToken으로 accessToken 갱신
+  - `POST /auth/logout` — accessToken 무효화
 
 ## 코딩 스타일
 

@@ -1,15 +1,71 @@
 import { Asset, Top, FixedBottomCTA, FixedBottomCTAProvider, StepperRow } from '@toss/tds-react-native';
+import { appLogin, Storage } from '@apps-in-toss/framework';
 
 import { createRoute, Spacing } from '@granite-js/react-native';
-import { View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Alert, View } from 'react-native';
 
 import { fontSize, colors, spacing, size } from '../styles/variables';
+
+const API_BASE = 'http://192.168.0.27:3000';
 
 export const Route = createRoute('/', {
   component: Page,
 });
 
 function Page() {
+  const navigation = Route.useNavigation();
+  const [loading, setLoading] = useState(false);
+  const [checking, setChecking] = useState(true);
+
+  // 만약 스토리지에 이미 로그인 토큰이 있다면 main으로 이동
+  useEffect(() => {
+    Storage.getItem('accessToken').then((token) => {
+      if (token) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        navigation.reset({ index: 0, routes: [{ name: '/main' as any }] });
+      } else {
+        setChecking(false);
+      }
+    });
+  }, []);
+
+  // 로그인 이벤트
+  const handleLogin = async () => {
+    setLoading(true);
+    try {
+      const { authorizationCode, referrer } = await appLogin();
+
+      const response = await fetch(`${API_BASE}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ authorizationCode, referrer }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        Alert.alert('로그인 실패', data.error?.reason || '알 수 없는 오류');
+        return;
+      }
+
+      await Storage.setItem('accessToken', data.accessToken);
+      await Storage.setItem('refreshToken', data.refreshToken);
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      navigation.reset({ index: 0, routes: [{ name: '/main' as any }] });
+    } catch (error) {
+      Alert.alert('로그인 실패', '다시 시도해주세요.');
+      console.log('로그인 에러: ', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (checking) {
+    return null;
+  }
+
   return (
     <>
       <Spacing size={fontSize.sm} />
@@ -83,7 +139,9 @@ function Page() {
       </View>
 
       <FixedBottomCTAProvider>
-        <FixedBottomCTA loading={false}>오늘부터 시작하기</FixedBottomCTA>
+        <FixedBottomCTA loading={loading} onPress={handleLogin}>
+          오늘부터 시작하기
+        </FixedBottomCTA>
       </FixedBottomCTAProvider>
     </>
   );

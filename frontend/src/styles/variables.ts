@@ -11,7 +11,7 @@ export const colors = {
 } as const;
 
 export const fontSize = {
-  xs: 14,
+  xs: 13,
   sm: 16,
   md: 18,
   lg: 24,
@@ -22,6 +22,7 @@ export const fontSize = {
 export const size = {
   sm: 40,
   md: 50,
+  large: 60,
   full: 100,
 } as const;
 

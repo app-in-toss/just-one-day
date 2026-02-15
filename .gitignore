@@ -12,6 +12,7 @@ npm-debug.log
 yarn-error.log
 
 .env
+backend/certs/
 .granite
 .swc
 .DS_Store
