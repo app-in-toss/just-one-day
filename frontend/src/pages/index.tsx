@@ -1,104 +1,90 @@
-import { createRoute } from '@granite-js/react-native';
-import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { Asset, Top, FixedBottomCTA, FixedBottomCTAProvider, StepperRow } from '@toss/tds-react-native';
+
+import { createRoute, Spacing } from '@granite-js/react-native';
+import { View } from 'react-native';
+
+import { fontSize, colors, spacing, size } from '../styles/variables';
 
 export const Route = createRoute('/', {
   component: Page,
 });
 
 function Page() {
-  const navigation = Route.useNavigation();
-
-  const goToAboutPage = () => {
-    navigation.navigate('/about');
-  };
-
   return (
-    <Container>
-      <Text style={styles.title}>🎉 Welcome! 🎉</Text>
-      <Text style={styles.subtitle}>
-        This is a demo page for the <Text style={styles.brandText}>Granite</Text> Framework.
-      </Text>
-      <Text style={styles.description}>This page was created to showcase the features of the Granite.</Text>
-      <TouchableOpacity style={styles.button} onPress={goToAboutPage}>
-        <Text style={styles.buttonText}>Go to About Page</Text>
-      </TouchableOpacity>
-    </Container>
+    <>
+      <Spacing size={fontSize.sm} />
+      <Top
+        title={
+          <Top.TitleParagraph color={colors.defaultTextColor}>
+            하루 하나 실천하고 {'\n'} 포인트 받아요
+          </Top.TitleParagraph>
+        }
+      />
+
+      <Spacing size={spacing.md} />
+
+      <View style={{ alignItems: 'center' }}>
+        <View>
+          <Asset.Icon frameShape={{ width: size.full, height: size.full }} name="icon-coffee-drink-fill" />
+
+          {/* 세밀한 위치 조정을 위해 -5px씩 이동. 굳이 variable에 넣지 않아도 될 것 같음 */}
+          <View style={{ position: 'absolute', bottom: -5, right: -5 }}>
+            <Asset.Icon
+              frameShape={{ width: size.sm, height: size.sm }}
+              name="icon-point-circle-yellow"
+              accessibilityLabel=""
+            />
+          </View>
+        </View>
+      </View>
+
+      <Spacing size={spacing.xxl} />
+
+      <View>
+        <StepperRow
+          left={
+            <StepperRow.AssetFrame
+              shape={Asset.frameShape.CircleMedium}
+              content={<Asset.Icon name="icon-emoji-fire" />}
+              backgroundColor="transparent"
+            />
+          }
+          center={
+            <StepperRow.Texts
+              type="A"
+              title="이번주에 선택한 소비를 참아요"
+              description="커피 · 택시 · 배달 중 하나만"
+            />
+          }
+        />
+        <StepperRow
+          left={
+            <StepperRow.AssetFrame
+              shape={Asset.frameShape.CircleMedium}
+              content={<Asset.Icon name="icon-alarm-reddot" />}
+              backgroundColor="transparent"
+            />
+          }
+          center={
+            <StepperRow.Texts type="A" title="매일 저녁, 알림으로 알려드려요" description="잊지않게 하루 한 번만" />
+          }
+        />
+        <StepperRow
+          left={
+            <StepperRow.AssetFrame
+              shape={Asset.frameShape.CircleMedium}
+              content={<Asset.Icon name="icon-point-circle-green-list-fill" />}
+              backgroundColor="transparent"
+            />
+          }
+          center={<StepperRow.Texts type="A" title="성공하면 포인트를 받아요" description="참으면 포인트가 쌓여요" />}
+          hideLine
+        />
+      </View>
+
+      <FixedBottomCTAProvider>
+        <FixedBottomCTA loading={false}>오늘부터 시작하기</FixedBottomCTA>
+      </FixedBottomCTAProvider>
+    </>
   );
 }
-
-function Container({ children }: { children: React.ReactNode }) {
-  return <View style={styles.container}>{children}</View>;
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  brandText: {
-    color: '#0064FF',
-    fontWeight: 'bold',
-  },
-  text: {
-    fontSize: 24,
-    color: '#202632',
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#1A202C',
-    textAlign: 'center',
-    marginBottom: 16,
-  },
-  subtitle: {
-    fontSize: 18,
-    color: '#4A5568',
-    textAlign: 'center',
-    marginBottom: 24,
-  },
-  description: {
-    fontSize: 16,
-    color: '#718096',
-    textAlign: 'center',
-    marginBottom: 32,
-    lineHeight: 24,
-  },
-  button: {
-    backgroundColor: '#0064FF',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  codeContainer: {
-    padding: 8,
-    backgroundColor: '#333',
-    borderRadius: 4,
-    width: '100%',
-  },
-  code: {
-    color: 'white',
-    fontFamily: 'monospace',
-    letterSpacing: 0.5,
-    fontSize: 14,
-  },
-});
