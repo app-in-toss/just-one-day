@@ -8618,9 +8618,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"frontend@workspace:frontend":
+"frontend@workspace:.":
   version: 0.0.0-use.local
-  resolution: "frontend@workspace:frontend"
+  resolution: "frontend@workspace:."
   dependencies:
     "@apps-in-toss/framework": "npm:^1.11.2"
     "@babel/core": "npm:7.28.5"
@@ -10553,18 +10553,6 @@ __metadata:
   checksum: 10c0/a32679e9cb55469cb6d8bbc863f7d631b2c98b7fc7bf172629261751a6e7bc8da6ae374ddb74d5fbd8b06cf0eb4572287b259813d92b36e384024ed35e4c13e1
   languageName: node
   linkType: hard
-
-"just-one-day-backend@workspace:backend":
-  version: 0.0.0-use.local
-  resolution: "just-one-day-backend@workspace:backend"
-  languageName: unknown
-  linkType: soft
-
-"just-one-day@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "just-one-day@workspace:."
-  languageName: unknown
-  linkType: soft
 
 "keymirror@npm:^0.1.1":
   version: 0.1.1

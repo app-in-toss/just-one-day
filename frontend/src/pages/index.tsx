@@ -1,7 +1,6 @@
 import { createRoute } from '@granite-js/react-native';
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { Button } from '@toss/tds-react-native';
 
 export const Route = createRoute('/', {
   component: Page,
@@ -21,9 +20,9 @@ function Page() {
         This is a demo page for the <Text style={styles.brandText}>Granite</Text> Framework.
       </Text>
       <Text style={styles.description}>This page was created to showcase the features of the Granite.</Text>
-      <Button type="primary" size="large" onPress={() => navigation.navigate('/about')}>
-        서비스 둘러보기
-      </Button>
+      <TouchableOpacity style={styles.button} onPress={goToAboutPage}>
+        <Text style={styles.buttonText}>Go to About Page</Text>
+      </TouchableOpacity>
     </Container>
   );
 }
