@@ -10563,6 +10563,10 @@ __metadata:
 "just-one-day@workspace:.":
   version: 0.0.0-use.local
   resolution: "just-one-day@workspace:."
+  dependencies:
+    eslint: "npm:^9.17.0"
+    prettier: "npm:3.4.2"
+    typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 

@@ -16,4 +16,10 @@ export default [
     },
   },
   pluginReact.configs.flat.recommended,
+  pluginReact.configs.flat['jsx-runtime'],
+  {
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'error',
+    },
+  },
 ];

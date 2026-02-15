@@ -3,15 +3,24 @@ dist/
 npm-debug.log
 
 .yarn/*
-.pnp.*
-yarn-error.log
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+.pnp.*
+yarn-error.log
 
 .env
 .granite
 .swc
 .DS_Store
+
+# frontend 내 중복 설정 (루트에서 관리)
+frontend/.vscode/
+frontend/.yarn/
+frontend/.yarnrc.yml
+frontend/.gitignore
+frontend/.nvmrc
+frontend/.prettierrc
+frontend/README.md

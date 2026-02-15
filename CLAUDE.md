@@ -11,6 +11,7 @@ just-one-day/
 │   │   ├── _app.tsx               # 앱 루트 컴포넌트
 │   │   ├── pages/
 │   │   │   ├── index.tsx          # 메인 페이지
+│   │   │   ├── _404.tsx           # 404 페이지
 │   │   │   └── about.tsx          # About 페이지
 │   │   ├── styles/
 │   │   │   └── variables.ts       # 디자인 토큰 (색상, 폰트, 간격 등)

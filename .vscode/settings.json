@@ -4,8 +4,18 @@
     "**/.pnp.*": true
   },
   "eslint.nodePath": ".yarn/sdks",
+  "eslint.workingDirectories": [
+    "frontend"
+  ],
   "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "cSpell.words": ["intoss"]
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "cSpell.words": [
+    "intoss"
+  ]
 }
