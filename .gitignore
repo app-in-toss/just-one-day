@@ -13,6 +13,7 @@ yarn-error.log
 
 .env
 backend/certs/
+backend/serviceAccountKey.json
 .granite
 .swc
 .DS_Store
