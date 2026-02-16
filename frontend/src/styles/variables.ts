@@ -8,6 +8,7 @@ export const colors = {
 
   // text 기본 색상
   defaultTextColor: '#191F28ff',
+  descTextColor: '#6b7684',
 } as const;
 
 export const fontSize = {

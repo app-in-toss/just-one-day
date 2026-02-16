@@ -18,12 +18,23 @@ function Page() {
   const [loading, setLoading] = useState(false);
   const [checking, setChecking] = useState(true);
 
-  // 만약 스토리지에 이미 로그인 토큰이 있다면 main으로 이동
+  // 자동 로그인: 토큰이 있으면 챌린지 상태 확인 후 라우팅
   useEffect(() => {
-    Storage.getItem('accessToken').then((token) => {
+    Storage.getItem('accessToken').then(async (token) => {
       if (token) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        navigation.reset({ index: 0, routes: [{ name: '/main' as any }] });
+        try {
+          const res = await fetch(`${API_BASE}/challenge/status`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const data = await res.json();
+          const target = data.isOnboarded ? '/main' : '/setup';
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          navigation.reset({ index: 0, routes: [{ name: target as any }] });
+        } catch {
+          // API 실패 시 메인으로 이동
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          navigation.reset({ index: 0, routes: [{ name: '/main' as any }] });
+        }
       } else {
         setChecking(false);
       }
@@ -52,8 +63,9 @@ function Page() {
       await Storage.setItem('accessToken', data.accessToken);
       await Storage.setItem('refreshToken', data.refreshToken);
 
+      const target = data.isOnboarded ? '/main' : '/setup';
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      navigation.reset({ index: 0, routes: [{ name: '/main' as any }] });
+      navigation.reset({ index: 0, routes: [{ name: target as any }] });
     } catch (error) {
       Alert.alert('로그인 실패', '다시 시도해주세요.');
       console.log('로그인 에러: ', error);
